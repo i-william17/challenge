@@ -1,3 +1,74 @@
+This project implements a **React-based skip hire selection interface** that allows users to browse available skips by size, filter by skip characteristics (e.g., road-allowed or heavy waste), and proceed with a booking. It's part of a larger multi-step booking flow for a skip hire web application.
+
+---
+
+## 🚀 Overview
+
+The `SkipGrid` component fetches skip data from a remote API based on postcode and area, presents the user with a grid of available skip sizes, and enables filtering and selection of the appropriate skip. The selected skip is shown in a fixed panel at the bottom, with options to proceed to booking.
+
+---
+
+## 🧱 Tech Stack
+
+- **React (with Next.js App Directory structure)**  
+- **TailwindCSS** for styling  
+- **Fetch API** for server communication  
+- **Optional: Next.js Dynamic Routes** for multi-step navigation
+
+---
+
+## 🧩 Features
+
+| Feature                      | Description                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|
+| ✅ Skip Data Fetching        | Loads skips by postcode/area via `fetch()`                                  |
+| ✅ VAT Calculation           | Computes final prices by adding VAT to base price                          |
+| ✅ Loading Indicator         | Displays spinner and message while data is loading                         |
+| ✅ Filter Tabs               | Users can filter skips by "All", "Road Allowed", or "Heavy Waste"          |
+| ✅ Selection UI              | Visually highlights selected skip and disables unavailable options         |
+| ✅ Progress Indicator        | Shows booking progress (6-step horizontal stepper)                         |
+| ✅ Sticky Action Panel       | Displays selected skip at bottom of screen with action buttons             |
+
+---
+
+## 🧠 Design Decisions
+
+- **Component-Scoped State:**  
+  All state (loading, skips, filters, selection) is locally managed via `useState` and `useEffect`.
+
+- **Data Processing:**  
+  On load, skip data is processed to:
+  - Add VAT to prices
+  - Format final, original, and savings prices
+  - Enrich with human-readable skip names
+
+- **Resilience:**  
+  Handles loading, fetch errors, and forbidden skips gracefully.
+
+- **Responsive UI:**  
+  Uses Tailwind's responsive grid (`xl:grid-cols-3`, `lg:grid-cols-2`) and mobile-friendly layout.
+
+---
+
+## 📦 Data Model
+
+Each skip fetched from the API is processed into the following structure:
+
+```ts
+{
+  id: string,
+  size: number,
+  hire_period_days: number,
+  allowed_on_road: boolean,
+  allows_heavy_waste: boolean,
+  forbidden: boolean,
+  price: number,           // Final price with VAT
+  originalPrice: number,   // Marked-up price (e.g., 20% more)
+  savings: number,         // Discount shown to user
+  name: string             // Human-friendly name, e.g., "8 Yard Skip"
+}
+
+
 <<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
